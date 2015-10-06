@@ -9,14 +9,15 @@ template '/etc/openvpn/pingworks.conf' do
   mode 00644
 end
 
+service 'openvpn' do
+  supports :status => true
+  action [ :enable, :start ]
+end
+
 cookbook_file '/etc/default/openvpn' do
   source 'default-openvpn'
   owner 'root'
   group 'root'
   mode 00644
-end
-
-service 'openvpn' do
-  supports :status => true
-  action [ :enable, :start ]
+  notifies :restart, 'service[openvpn]', :delayed
 end
