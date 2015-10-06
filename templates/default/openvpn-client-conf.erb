@@ -1,0 +1,25 @@
+client
+
+dev tun
+proto udp
+
+remote <%= node['pw_openvpn']['endpoint'] %> 1194
+
+resolv-retry infinite
+
+nobind
+
+persist-key
+persist-tun
+
+ca /etc/openvpn/keys/ca.crt
+cert /etc/openvpn/keys/<%= node['pw_openvpn']['clientname'] %>.crt
+key /etc/openvpn/keys/<%= node['pw_openvpn']['clientname'] %>.key
+tls-auth /etc/openvpn/keys/ta-server.key 1
+
+comp-lzo
+verb 3
+
+tun-mtu 1350
+fragment 0
+mssfix 0
